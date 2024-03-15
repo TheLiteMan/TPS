@@ -7,6 +7,7 @@ public class Fireball : MonoBehaviour
 
     public float speed;
     public float lifetime;
+    public float damage = 10;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,19 @@ public class Fireball : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        DestroyFireball();
+ 
+        var enemyHealth = collision.gameObject.GetComponent<EnemyHealth>();
+         if (enemyHealth != null)
+        { 
+            enemyHealth.value -= damage;
+            if (enemyHealth.value <=0)
+            {
+                Destroy(enemyHealth.gameObject);
+            }
+        }
+        
+    
+    DestroyFireball();
     }
 
     private void DestroyFireball()
